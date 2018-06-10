@@ -1,5 +1,11 @@
 describe 'CodeAnalyzer' do
 
+  before do
+    Dir.glob('spec/fixtures/**/*').collect { |file|
+      File.delete(file)
+    }
+  end
+
   let(:code) {
     <<-CODE
       public class JavaClassFoo {
@@ -36,13 +42,14 @@ describe 'CodeAnalyzer' do
   end
 
   describe 'analyze' do
+    subject {CodeAnalyzer.new}
     it 'extract class name in java code' do
-      expect(CodeAnalyzer.new.analyze(code)[:class_name]).to eq 'JavaClassFoo'
-      expect(CodeAnalyzer.new.analyze(code2)[:class_name]).to eq 'JavaClassBar'
+      expect(subject.analyze(code)[:class_name]).to eq 'JavaClassFoo'
+      expect(subject.analyze(code2)[:class_name]).to eq 'JavaClassBar'
     end
     it 'extract number of class lines in java code ' do
-      expect(CodeAnalyzer.new.analyze(code)[:lines]).to eq 3
-      expect(CodeAnalyzer.new.analyze(code2)[:lines]).to eq 8
+      expect(subject.analyze(code)[:lines]).to eq 3
+      expect(subject.analyze(code2)[:lines]).to eq 8
     end
   end
 end
