@@ -1,11 +1,12 @@
 
 class CodeAnalyzer
 
+
+
   def summary
-    result = []
-    result.push(run(File.read('spec/fixtures/code.java')))
-    result.push(run(File.read('spec/fixtures/code2.java')))
-    result
+    Dir.glob('spec/fixtures/**/*').collect { |file|
+      run(File.read(file))
+    }
   end
 
   def run(code)

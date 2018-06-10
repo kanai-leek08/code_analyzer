@@ -26,8 +26,8 @@ describe 'CodeAnalyzer' do
     File.write('spec/fixtures/code.java', code)
     File.write('spec/fixtures/code2.java', code2)
     expect(CodeAnalyzer.new.summary).to eq [
-      {class_name: 'JavaClassFoo', lines: 3},
       {class_name: 'JavaClassBar', lines: 8},
+      {class_name: 'JavaClassFoo', lines: 3},
     ]
   end
   it 'extract class name in java code' do
