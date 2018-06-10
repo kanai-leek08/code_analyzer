@@ -1,6 +1,13 @@
 
 class CodeAnalyzer
 
+  def summary
+    result = []
+    result.push(run(File.read('spec/fixtures/code.java')))
+    result.push(run(File.read('spec/fixtures/code2.java')))
+    result
+  end
+
   def run(code)
     result = {}
     code.split("\n").each do |line|
