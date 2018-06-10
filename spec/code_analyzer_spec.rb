@@ -1,22 +1,33 @@
 describe 'CodeAnalyzer' do
-  it 'extract class name in java code' do
-    code = <<-CODE
+  let(:code) {
+    <<-CODE
       public class ClassName {
         public void methodName() {
           xxx
         }
       }
     CODE
-    expect(CodeAnalyzer.new.run(code)).to eq 'ClassName'
-    code = <<-CODE
+  }
+  let(:code2) {
+    <<-CODE
       public class SomeThingDoClass {
         public void methodName() {
+          yyy
+          xxx
+        }
+        public void methodName2() {
+          yyy
           xxx
         }
       }
     CODE
-    expect(CodeAnalyzer.new.run(code)).to eq 'SomeThingDoClass'
-
-
+  }
+  it 'extract class name in java code' do
+    expect(CodeAnalyzer.new.run(code)[:class_name]).to eq 'ClassName'
+    expect(CodeAnalyzer.new.run(code2)[:class_name]).to eq 'SomeThingDoClass'
+  end
+  it 'extract number of class lines in java code ' do
+    expect(CodeAnalyzer.new.run(code)[:lines]).to eq 3
+    expect(CodeAnalyzer.new.run(code2)[:lines]).to eq 8
   end
 end
