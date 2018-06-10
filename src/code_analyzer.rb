@@ -1,15 +1,13 @@
 
 class CodeAnalyzer
 
-
-
-  def summary
+  def run
     Dir.glob('spec/fixtures/**/*').collect { |file|
-      run(File.read(file))
+      analyze(File.read(file))
     }
   end
 
-  def run(code)
+  def analyze(code)
     result = {}
     code.split("\n").each do |line|
       m = line.match(/class(.*)\{/)
