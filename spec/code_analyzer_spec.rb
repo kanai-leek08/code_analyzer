@@ -8,6 +8,7 @@ describe 'CodeAnalyzer' do
 
   let(:code) {
     <<-CODE
+
       public class JavaClassFoo {
         public void javaMethodFoo() {
           xxx
